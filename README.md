@@ -11,14 +11,14 @@ User Agent Parser > UAParser
 
 ## Usage ##
 ````php
-$UAP = new UAParser('Mozilla/5.0 (Linux; U; Android 5.0; hu-hu; LG-D855 Build/LRX21R.A1421812393) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
+$UAP = new dynamicart\UAParser('Mozilla/5.0 (Linux; U; Android 5.0; hu-hu; LG-D855 Build/LRX21R.A1421812393) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
 $UAP->getParsedData();
 ````
 
 or
 
 ````php
-$UAP = new UAParser();
+$UAP = new dynamicart\UAParser();
 $UAP->setUA('Mozilla/5.0 (Linux; U; Android 5.0; hu-hu; LG-D855 Build/LRX21R.A1421812393) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30');
 $UAP->getParsedData();
 ````

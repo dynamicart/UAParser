@@ -1,0 +1,29 @@
+{
+  "name": "dynamicart/ua-parser",
+  "authors": [
+    {
+      "name": "János Szentgyörgyi",
+      "email": "puttocska@gmail.com",
+      "homepage": "http://dynamicart.hu",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "puttocska@gmail.com",
+    "docs": "https://github.com/dynamicart/UAParser/blob/master/README.md",
+    "source": "https://github.com/dynamicart/UAParser",
+    "issue": "https://github.com/dynamicart/UAParser/issues"
+  },
+  "description": "User Agent Parser",
+  "keywords": ["ua", "parser", "detector", "mobile"],
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "dynamicart\\": "src"
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "minimum-stability": "stable"
+}
