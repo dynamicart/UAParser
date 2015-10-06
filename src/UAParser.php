@@ -50,18 +50,23 @@ class UAParser{
         'Nokia'         => 'Nokia.*(C5|5800d|Lumia [0-9]+|Lumia)|Nokia([0-9])*|Series40|Series60|S60|Nokia|Windows Phone.*ARM',
         'BlackBerry'    => 'BlackBerry|\bBB10\b|rim[0-9]+',
         'AllView'       => '\bALLVIEW.*(Impera|A4ALL|P5|A6)|\bALLVIEW|A4You',
-        'HTC'           => 'HTC|HTC.*(Sensation|Evo|Vision|Explorer|6800|8100|8900|A7272|S510e|C110e|Legend|Desire|T8282)|APX515CKT|Qtek9090|APA9292KT|HD_mini|Sensation.*Z710e|PG86100|Z715e|Desire.*(A8181|HD)|ADR6200|ADR6400L|ADR6425|001HT|Inspire 4G|Android.*\bEVO\b|T-Mobile G1|Z520m',
+        'HTC'           => 'HTC|HTC.*(Sensation|Evo|Vision|Explorer|6800|8100|8900|A7272|S510e|C110e|Legend|Desire|T8282)|APX515CKT|Qtek9090|APA9292KT|HD_mini|Sensation.*Z710e|PG86100|Z715e|Desire.*(A8181|HD)|ADR6200|ADR6400L|ADR6425|001HT|Inspire 4G|Android.*\bEVO\b|T-Mobile G1|Z520m|\bM9\b',
         'Nexus'         => 'Nexus One|Nexus S|Galaxy.*Nexus|Nexus (\d)+',
-        'Prestigio'     => 'PSP8500DUO|Prestigio|PAP5400DUO|PAP5300DUO',
+        'Prestigio'     => 'Prestigio|(PSP|PAP)[0-9]{4}(DUO)?',
+        'Cubot'         => 'GT95|GT72+',
         'Dell'          => 'Dell.*Aero|Dell.*Venue|DELL.*Venue Pro|Dell Flash|Dell Smoke|Dell Mini 3iX|XCD28|XCD35|\b001DL\b|\b101DL\b|\bGS01\b',
         'Doogee'        => 'TURBO DG2014|DG800',
+        'Eboda'         => 'Storm X450 II',
+        'GigaByte'      => 'GSmart Arty A3',
         'Motorola'      => 'Motorola|DROIDX|DROID BIONIC|DROID4|\bDroid\b.*Build|Android.*Xoom|HRI39|MOT-|A1260|A1680|A555|A853|A855|A953|A955|A956|Motorola.*ELECTRIFY|Motorola.*i1|i867|i940|MB200|MB300|MB501|MB502|MB508|MB511|MB520|MB525|MB526|MB611|MB612|MB632|MB810|MB855|MB860|MB861|MB865|MB870|ME501|ME502|ME511|ME525|ME600|ME632|ME722|ME811|ME860|ME863|ME865|MT620|MT710|MT716|MT720|MT810|MT870|MT917|Motorola.*TITANIUM|WX435|WX445|XT300|XT301|XT311|XT316|XT317|XT319|XT320|XT390|XT502|XT530|XT531|XT532|XT535|XT603|XT610|XT611|XT615|XT681|XT701|XT702|XT711|XT720|XT800|XT806|XT860|XT862|XT875|XT882|XT883|XT894|XT901|XT907|XT909|XT910|XT912|XT928|XT926|XT915|XT919|XT925|XT1021|\bMoto E\b',
-        'Samsung'       => '(Samsung|Android).*(T-|I-|GT-|SM-|SGH-|BGT-|SCH-|SHW-|SPH-|SWC-|SHV-)[a-zA-Z0-9]+|Samsung.*Omnia[0-9]?|Samsung',
+        'Samsung'       => '(Samsung|Android).*(T-|I-|GT-|SM-|SGH-|BGT-|SCH-|SHW-|SPH-|SWC-|SHV-)[a-zA-Z0-9]+|Samsung.*Omnia[0-9]?|Samsung|I9500',
         'LG'            => 'LG[- ]?[a-zA-Z0-9]+',
         'SonyEricsson'  => 'SonyEricsson.?([a-zA-Z0-9]){2,6}',
-        'Asus'          => 'Asus.*Galaxy|PadFone.*Mobile|Asus.*(T00N|TF300T|TF700T|T00J)|K012|K013',
-        'Acer'          => 'Z160|Z500',
+        'Asus'          => 'Asus.*Galaxy|PadFone.*Mobile|Asus.*(T00N|TF300T|TF700T|T00J)|Android.*(\bK012\b|\bK013\b|\bK007\b)',
+        'Acer'          => '\bZ160\b|\bZ500\b',
         'HUAWEI'        => 'HUAWEI.?[a-zA-Z0-9\-]+|U8500',
+        'Xiaomi'        => 'Android.*(\bHM 1SW\b|\bHM 1S\b|\bMI 3W\b|\bMI 3W\b|\bMI 2S\b)',
+        'Akai'          => 'AKAI GLORY G3',
         // http://www.micromaxinfo.com/mobiles/smartphones
         // Added because the codes might conflict with Acer Tablets.
         'Micromax'      => 'Micromax.*\b(A210|A92|A88|A72|A111|A110Q|A115|A116|A110|A90S|A26|A51|A35|A54|A25|A27|A89|A68|A65|A57|A90)\b',
@@ -83,28 +88,37 @@ class UAParser{
         // Wolfgang - a brand that is sold by Aldi supermarkets.
         // http://www.wolfgangmobile.com/
         'Wolfgang'      => 'AT-B24D|AT-AS50HD|AT-AS40W|AT-AS55HD|AT-AS45q2|AT-B26D|AT-AS50Q',
-        'Alcatel'       => 'Alcatel.*(3040G)|ALCATEL.?ONE.?TOUCH.?([a-zA-Z0-9]+)|Alcatel|P360X|ONE TOUCH 4033X|7050Y|6050Y',
-        'MediaTek'      => '\bMT6572\b',
-        'Nintendo'      => 'Nintendo 3DS',
-        'Medion'        => 'P4502',
-        'Mobiwire'      => 'Ahiga',
-        'Telenor'       => 'Telenor_OneTouch',
-        'Overmax'       => 'OV-Vertis-01',
-        'OnePlus'       => 'A0001',
-        'Lenovo'        => 'Lenovo.?(A328|A680|A369i|P780|P70|S750)',
-        'THL'           => 'ThL W200S',
+        'Alcatel'       => 'Alcatel.*(3040G)|ALCATEL.?ONE.?TOUCH.?([a-zA-Z0-9]+)|Alcatel|\bP360X\b|ONE TOUCH 4033X|\b7050Y\b|\b6050Y\b|\b6036Y\b|\b4018D\b|\b4032X\b|\b5050Y\b',
         'Cynus'         => 'Cynus T5',
-        'M-Tech'        => 'aTAB5C',
+        'Jiayu'         => 'aTAB7DCI',
+        'Leagoo'        => '\bLead 2',
+        'MediaTek'      => 'Android.*(\bMT6572\b)',
+        'Navon'         => 'Android.*(\bM402\b|\bM450\b|\bS400_01\b|\bM502\b)',
+        'Nintendo'      => 'Nintendo 3DS',
+        'Medion'        => 'Android.*(\bP4502\b)',
+        'Mobiwire'      => 'Android.*(\bAhiga\b)',
+        'M-Tech'        => '\baTAB5C\b|aTAB3502D|Atab403',
+        'Overmax'       => 'OV-Vertis-01',
+        'OnePlus'       => 'Android.*(\bA0001\b)',
+        'Qilive'        => 'Qilive 40',
+        'Lenovo'        => 'Lenovo.?(A328|A680|A369i|P780|P70|S750|A536|A820)',
+        'Telenor'       => 'Telenor_OneTouch|TELENOR SMART TOUCH MINI|Telenor_One_Touch_C|Telenor_Smart_HD',
+        'THL'           => 'ThL W200S|thl 4000',
         // http://en.wikipedia.org/wiki/Amoi
-        'Amoi'          => 'Amoi',
+        'Amoi'          => 'Android.*(\bAmoi\b)',
         // http://en.wikipedia.org/wiki/INQ
-        'INQ'           => 'INQ',
-        'ZTE'           => 'KIS PLUS|Blade|ZTE-SKATE',
+        'INQ'           => '\bINQ\b',
+        'ZTE'           => 'KIS PLUS|\bBlade\b|ZTE-SKATE|\bKis\b|ZTE V795',
         'iPhone'        => '\biPhone\b|\biPod\b', // |\biTunes
         // @Tapatalk is a mobile app; http://support.tapatalk.com/threads/smf-2-0-2-os-and-browser-detection-plugin-and-tapatalk.15565/#post-79039
-        'Sony'          => 'Sony.?([a-zA-Z0-9]){2,6}|ST26i|D5803|C1505|D5503|D6503|D2303|C5303|D2303|C1905|D2005|D6603|C6603|E2003|C6903|C2105|E2105|D5303|ST21i|C6903|E2303|LT26i|C1605|D5103|ST23i|ST25i|LT22i|LT25i|D2203|ST17i',
-        'Vodafone'      => 'vodafone|VF-895N',
-        'GenericPhone'  => 'Tapatalk|PDA;|SAGEM|\bmmp\b|pocket|\bpsp\b|symbian|Smartphone|smartfon|treo|up.browser|up.link|\bwap\b|N900|MAUI.*WAP.*Browser|Android; Mobile',
+        'Sony'          => 'Sony.?([a-zA-Z0-9]){2,6}|Android.*(\bST26i\b|\bD5803\b|\bC1505\b|\bD5503\b|\bD6503\b|\bD2303\b|\bC5303\b|\bD2303\b|\bC1905\b|\bD2005\b|\bD6603\b|\bC6603\b|\bE2003\b|\bC6903\b|\bC2105\b|\bE2105\b|\bD5303\b|\bST21i\b|\bC6903\b|\bE2303\b|\bLT26i\b|\bC1605\b|\bD5103\b|\bST23i\b|\bST25i\b|\bLT22i\b|\bLT25i\b|\bD2203\b|\bST17i\b|\bD6653\b|\bLT30p\b|\bD2403\b|\bST18i\b|\bD2302\b|\bC2104\b|Xperia SP)',
+        'Vodafone'      => 'vodafone|VF-895N|VF685',
+        'Opera?'        => 'Android.*(Opera Mobi|Opera Mini)',
+        // TODO: explode to own brands
+        'GenericPhone'  => 'Tapatalk|PDA;|SAGEM|\bmmp\b|pocket|\bpsp\b|symbian|Smartphone|smartfon|treo|up.browser|up.link|\bwap\b|N900|MAUI.*WAP.*Browser|Android; Mobile|01_v89_gq2008s_89t',
+        'N3?'           => 'Android.*(\bN3\b Build)',
+        // TODO: what is this
+        // FIZZ|V2|
     );
 
     /**
@@ -116,6 +130,7 @@ class UAParser{
         // Removed |^.*Android.*Nexus(?!(?:Mobile).)*$
         // @see #442
         'NexusTablet'       => 'Android.*Nexus[\s]+(7|9|10)',
+        'Alcatel'           => 'onetouch EVO7',
         'SamsungTablet'     => 'SAMSUNG.*Tablet|Galaxy.*Tab|SC-01C|GT-P1000|GT-P1003|GT-P1010|GT-P3105|GT-P6210|GT-P6800|GT-P6810|GT-P7100|GT-P7300|GT-P7310|GT-P7500|GT-P7510|SCH-I800|SCH-I815|SCH-I905|SGH-I957|SGH-I987|SGH-T849|SGH-T859|SGH-T869|SPH-P100|GT-P3100|GT-P3108|GT-P3110|GT-P5100|GT-P5110|GT-P6200|GT-P7320|GT-P7511|GT-N8000|GT-P8510|SGH-I497|SPH-P500|SGH-T779|SCH-I705|SCH-I915|GT-N8013|GT-P3113|GT-P5113|GT-P8110|GT-N8010|GT-N8005|GT-N8020|GT-P1013|GT-P6201|GT-P7501|GT-N5100|GT-N5105|GT-N5110|SHV-E140K|SHV-E140L|SHV-E140S|SHV-E150S|SHV-E230K|SHV-E230L|SHV-E230S|SHW-M180K|SHW-M180L|SHW-M180S|SHW-M180W|SHW-M300W|SHW-M305W|SHW-M380K|SHW-M380S|SHW-M380W|SHW-M430W|SHW-M480K|SHW-M480S|SHW-M480W|SHW-M485W|SHW-M486W|SHW-M500W|GT-I9228|SCH-P739|SCH-I925|GT-I9200|GT-P5200|GT-P5210|GT-P5210X|SM-T311|SM-T310|SM-T310X|SM-T210|SM-T210R|SM-T211|SM-P600|SM-P601|SM-P605|SM-P900|SM-P901|SM-T217|SM-T217A|SM-T217S|SM-P6000|SM-T3100|SGH-I467|XE500|SM-T110|GT-P5220|GT-I9200X|GT-N5110X|GT-N5120|SM-P905|SM-T111|SM-T2105|SM-T315|SM-T320|SM-T320X|SM-T321|SM-T520|SM-T525|SM-T530NU|SM-T230NU|SM-T330NU|SM-T900|XE500T1C|SM-P605V|SM-P905V|SM-T337V|SM-T537V|SM-T707V|SM-T807V|SM-P600X|SM-P900X|SM-T210X|SM-T230|SM-T230X|SM-T325|GT-P7503|SM-T531|SM-T330|SM-T530|SM-T705|SM-T705C|SM-T535|SM-T331|SM-T800|SM-T700|SM-T537|SM-T807|SM-P907A|SM-T337A|SM-T537A|SM-T707A|SM-T807A|SM-T237|SM-T807P|SM-P607T|SM-T217T|SM-T337T|SM-T807T|SM-T116NQ|SM-P550|SM-T350|SM-T550|SM-T9000|SM-P9000|SM-T705Y|SM-T805|GT-P3113|SM-T710|SM-T810|SM-T360|SM-T533', // SCH-P709|SCH-P729|SM-T2558|GT-I9205 - Samsung Mega - treat them like a regular phone.
         // http://docs.aws.amazon.com/silk/latest/developerguide/user-agent.html
         'Kindle'            => 'Kindle|Silk.*Accelerated|Android.*\b(KFOT|KFTT|KFJWI|KFJWA|KFOTE|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|WFJWAE|KFSAWA|KFSAWI|KFASWI)\b',
@@ -162,11 +177,13 @@ class UAParser{
         'IntensoTablet'     => 'INM8002KP|INM1010FP|INM805ND|Intenso Tab|TAB1004',
         // IRU.ru Tablets http://www.iru.ru/catalog/soho/planetable/
         'IRUTablet'         => 'M702pro',
+        'Akai'              => 'TAB-7800',
+        'Polaroid'          => 'Android.*(\bMIDC407\b)',
         'MegafonTablet'     => 'MegaFon V9|\bZTE V9\b|Android.*\bMT7A\b',
         // http://www.e-boda.ro/tablete-pc.html
         'EbodaTablet'       => 'E-Boda (Supreme|Impresspeed|Izzycomm|Essential)',
         // http://www.allview.ro/produse/droseries/lista-tablete-pc/
-        'AllViewTablet'           => 'Allview.*(Viva|Alldro|City|Speed|All TV|Frenzy|Quasar|Shine|TX1|AX1|AX2)',
+        'AllViewTablet'     => 'Allview.*(Viva|Alldro|City|Speed|All TV|Frenzy|Quasar|Shine|TX1|AX1|AX2)',
         // http://wiki.archosfans.com/index.php?title=Main_Page
         'ArchosTablet'      => '\b(101G9|80G9|A101IT)\b|Qilive 97R|Archos5|\bARCHOS (70|79|80|90|97|101|FAMILYPAD|)(b|)(G10| Cobalt| TITANIUM(HD|)| Xenon| Neon|XSK| 2| XS 2| PLATINUM| CARBON|GAMEPAD)\b',
         // http://www.ainol.com/plugin.php?identifier=ainol&module=product
@@ -178,14 +195,15 @@ class UAParser{
         // http://www.support.philips.com/support/catalog/worldproducts.jsp?userLanguage=en&userCountry=cn&categoryid=3G_LTE_TABLET_SU_CN_CARE&title=3G%20tablets%20/%20LTE%20range&_dyncharset=UTF-8
         'PhilipsTablet'     => '\b(PI2010|PI3000|PI3100|PI3105|PI3110|PI3205|PI3210|PI3900|PI4010|PI7000|PI7100)\b',
         // db + http://www.cube-tablet.com/buy-products.html
-        'CubeTablet'        => 'Android.*(K8GT|U9GT|U10GT|U16GT|U17GT|U18GT|U19GT|U20GT|U23GT|U30GT)|CUBE U8GT',
+        'CubeTablet'        => 'Android.*(K8GT|U9GT|U10GT|U16GT|U17GT|U18GT|U19GT|U20GT|U23GT|U30GT|U51GT)|CUBE U8GT',
         // http://www.cobyusa.com/?p=pcat&pcat_id=3001
         'CobyTablet'        => 'MID1042|MID1045|MID1125|MID1126|MID7012|MID7014|MID7015|MID7034|MID7035|MID7036|MID7042|MID7048|MID7127|MID8042|MID8048|MID8127|MID9042|MID9740|MID9742|MID7022|MID7010',
         // http://www.match.net.cn/products.asp
         'MIDTablet'         => 'M9701|M9000|M9100|M806|M1052|M806|T703|MID701|MID713|MID710|MID727|MID760|MID830|MID728|MID933|MID125|MID810|MID732|MID120|MID930|MID800|MID731|MID900|MID100|MID820|MID735|MID980|MID130|MID833|MID737|MID960|MID135|MID860|MID736|MID140|MID930|MID835|MID733',
         // http://www.msi.com/support
         // @todo Research the Windows Tablets.
-        'MSITablet' => 'MSI \b(Primo 73K|Primo 73L|Primo 81L|Primo 77|Primo 93|Primo 75|Primo 76|Primo 73|Primo 81|Primo 91|Primo 90|Enjoy 71|Enjoy 7|Enjoy 10)\b',
+        'MSITablet'         => 'MSI \b(Primo 73K|Primo 73L|Primo 81L|Primo 77|Primo 93|Primo 75|Primo 76|Primo 73|Primo 81|Primo 91|Primo 90|Enjoy 71|Enjoy 7|Enjoy 10)\b',
+        'M-Tech'            => 'aTAB7DCI',
         // @todo http://www.kyoceramobile.com/support/drivers/
         //    'KyoceraTablet' => null,
         // @todo http://intexuae.com/index.php/category/mobile-devices/tablets-products/
@@ -219,6 +237,7 @@ class UAParser{
         'KoboTablet'        => 'Kobo Touch|\bK080\b|\bVox\b Build|\bArc\b Build',
         // French Danew Tablets http://www.danew.com/produits-tablette.php
         'DanewTablet'       => 'DSlide.*\b(700|701R|702|703R|704|802|970|971|972|973|974|1010|1012)\b',
+        'Navon'             => 'Navon Explorer 3G|Raptor_10|HFM7002KD',
         // Texet Tablets and Readers http://www.texet.ru/tablet/
         'TexetTablet'       => 'NaviPad|TB-772A|TM-7045|TM-7055|TM-9750|TM-7016|TM-7024|TM-7026|TM-7041|TM-7043|TM-7047|TM-8041|TM-9741|TM-9747|TM-9748|TM-9751|TM-7022|TM-7021|TM-7020|TM-7011|TM-7010|TM-7023|TM-7025|TM-7037W|TM-7038W|TM-7027W|TM-9720|TM-9725|TM-9737W|TM-1020|TM-9738W|TM-9740|TM-9743W|TB-807A|TB-771A|TB-727A|TB-725A|TB-719A|TB-823A|TB-805A|TB-723A|TB-715A|TB-707A|TB-705A|TB-709A|TB-711A|TB-890HD|TB-880HD|TB-790HD|TB-780HD|TB-770HD|TB-721HD|TB-710HD|TB-434HD|TB-860HD|TB-840HD|TB-760HD|TB-750HD|TB-740HD|TB-730HD|TB-722HD|TB-720HD|TB-700HD|TB-500HD|TB-470HD|TB-431HD|TB-430HD|TB-506|TB-504|TB-446|TB-436|TB-416|TB-146SE|TB-126SE',
         // Avoid detecting 'PLAYSTATION 3' as mobile.
@@ -265,49 +284,50 @@ class UAParser{
         // http://www.visture.com/index.asp
         'VistureTablet'     => 'V97 HD|i75 3G|Visture V4( HD)?|Visture V5( HD)?|Visture V10',
         // http://www.mijncresta.nl/tablet
-        'CrestaTablet'     => 'CTP(-)?810|CTP(-)?818|CTP(-)?828|CTP(-)?838|CTP(-)?888|CTP(-)?978|CTP(-)?980|CTP(-)?987|CTP(-)?988|CTP(-)?989',
+        'CrestaTablet'      => 'CTP(-)?810|CTP(-)?818|CTP(-)?828|CTP(-)?838|CTP(-)?888|CTP(-)?978|CTP(-)?980|CTP(-)?987|CTP(-)?988|CTP(-)?989',
         // MediaTek - http://www.mediatek.com/_en/01_products/02_proSys.php?cata_sn=1&cata1_sn=1&cata2_sn=309
-        'MediatekTablet' => '\bMT8125|MT8389|MT8135|MT8377\b',
+        'MediatekTablet'    => '\bMT8125|MT8389|MT8135|MT8377\b',
         // Concorde tab
-        'ConcordeTablet' => 'Concorde([ ]+)?Tab|ConCorde ReadMan',
+        'ConcordeTablet'    => 'Concorde([ ]+)?Tab|ConCorde ReadMan',
         // GoClever Tablets - http://www.goclever.com/uk/products,c1/tablet,c5/
-        'GoCleverTablet' => 'GOCLEVER TAB|A7GOCLEVER|M1042|M7841|M742|R1042BK|R1041|TAB A975|TAB A7842|TAB A741|TAB A741L|TAB M723G|TAB M721|TAB A1021|TAB I921|TAB R721|TAB I720|TAB T76|TAB R70|TAB R76.2|TAB R106|TAB R83.2|TAB M813G|TAB I721|GCTA722|TAB I70|TAB I71|TAB S73|TAB R73|TAB R74|TAB R93|TAB R75|TAB R76.1|TAB A73|TAB A93|TAB A93.2|TAB T72|TAB R83|TAB R974|TAB R973|TAB A101|TAB A103|TAB A104|TAB A104.2|R105BK|M713G|A972BK|TAB A971|TAB R974.2|TAB R104|TAB R83.3|TAB A1042',
+        'GoCleverTablet'    => 'GOCLEVER TAB|A7GOCLEVER|M1042|M7841|M742|R1042BK|R1041|TAB A975|TAB A7842|TAB A741|TAB A741L|TAB M723G|TAB M721|TAB A1021|TAB I921|TAB R721|TAB I720|TAB T76|TAB R70|TAB R76.2|TAB R106|TAB R83.2|TAB M813G|TAB I721|GCTA722|TAB I70|TAB I71|TAB S73|TAB R73|TAB R74|TAB R93|TAB R75|TAB R76.1|TAB A73|TAB A93|TAB A93.2|TAB T72|TAB R83|TAB R974|TAB R973|TAB A101|TAB A103|TAB A104|TAB A104.2|R105BK|M713G|A972BK|TAB A971|TAB R974.2|TAB R104|TAB R83.3|TAB A1042',
         // Modecom Tablets - http://www.modecom.eu/tablets/portal/
-        'ModecomTablet' => 'FreeTAB 9000|FreeTAB 7.4|FreeTAB 7004|FreeTAB 7800|FreeTAB 2096|FreeTAB 7.5|FreeTAB 1014|FreeTAB 1001 |FreeTAB 8001|FreeTAB 9706|FreeTAB 9702|FreeTAB 7003|FreeTAB 7002|FreeTAB 1002|FreeTAB 7801|FreeTAB 1331|FreeTAB 1004|FreeTAB 8002|FreeTAB 8014|FreeTAB 9704|FreeTAB 1003',
+        'ModecomTablet'     => 'FreeTAB 9000|FreeTAB 7.4|FreeTAB 7004|FreeTAB 7800|FreeTAB 2096|FreeTAB 7.5|FreeTAB 1014|FreeTAB 1001 |FreeTAB 8001|FreeTAB 9706|FreeTAB 9702|FreeTAB 7003|FreeTAB 7002|FreeTAB 1002|FreeTAB 7801|FreeTAB 1331|FreeTAB 1004|FreeTAB 8002|FreeTAB 8014|FreeTAB 9704|FreeTAB 1003',
         // Vonino Tablets - http://www.vonino.eu/tablets
-        'VoninoTablet'  => '\b(Argus[ _]?S|Diamond[ _]?79HD|Emerald[ _]?78E|Luna[ _]?70C|Onyx[ _]?S|Onyx[ _]?Z|Orin[ _]?HD|Orin[ _]?S|Otis[ _]?S|SpeedStar[ _]?S|Magnet[ _]?M9|Primus[ _]?94[ _]?3G|Primus[ _]?94HD|Primus[ _]?QS|Android.*\bQ8\b|Sirius[ _]?EVO[ _]?QS|Sirius[ _]?QS|Spirit[ _]?S)\b',
+        'VoninoTablet'      => '\b(Argus[ _]?S|Diamond[ _]?79HD|Emerald[ _]?78E|Luna[ _]?70C|Onyx[ _]?S|Onyx[ _]?Z|Orin[ _]?HD|Orin[ _]?S|Otis[ _]?S|SpeedStar[ _]?S|Magnet[ _]?M9|Primus[ _]?94[ _]?3G|Primus[ _]?94HD|Primus[ _]?QS|Android.*\bQ8\b|Sirius[ _]?EVO[ _]?QS|Sirius[ _]?QS|Spirit[ _]?S)\b',
         // ECS Tablets - http://www.ecs.com.tw/ECSWebSite/Product/Product_Tablet_List.aspx?CategoryID=14&MenuID=107&childid=M_107&LanID=0
-        'ECSTablet'     => 'V07OT2|TM105A|S10OT1|TR10CS1',
+        'ECSTablet'         => 'V07OT2|TM105A|S10OT1|TR10CS1',
         // Storex Tablets - http://storex.fr/espace_client/support.html
         // @note: no need to add all the tablet codes since they are guided by the first regex.
-        'StorexTablet'  => 'eZee[_\']?(Tab|Go)[0-9]+|TabLC7|Looney Tunes Tab',
+        'StorexTablet'      => 'eZee[_\']?(Tab|Go)[0-9]+|TabLC7|Looney Tunes Tab',
         // Generic Vodafone tablets.
-        'VodafoneTablet' => 'SmartTab([ ]+)?[0-9]+|SmartTabII10|SmartTabII7',
+        'VodafoneTablet'    => 'SmartTab([ ]+)?[0-9]+|SmartTabII10|SmartTabII7',
         // French tablets - Essentiel B http://www.boulanger.fr/tablette_tactile_e-book/tablette_tactile_essentiel_b/cl_68908.htm?multiChoiceToDelete=brand&mc_brand=essentielb
         // Aka: http://www.essentielb.fr/
-        'EssentielBTablet' => 'Smart[ \']?TAB[ ]+?[0-9]+|Family[ \']?TAB2',
+        'EssentielBTablet'  => 'Smart[ \']?TAB[ ]+?[0-9]+|Family[ \']?TAB2',
         // Ross & Moor - http://ross-moor.ru/
-        'RossMoorTablet' => 'RM-790|RM-997|RMD-878G|RMD-974R|RMT-705A|RMT-701|RME-601|RMT-501|RMT-711',
+        'RossMoorTablet'    => 'RM-790|RM-997|RMD-878G|RMD-974R|RMT-705A|RMT-701|RME-601|RMT-501|RMT-711',
         // i-mobile http://product.i-mobilephone.com/Mobile_Device
-        'iMobileTablet'        => 'i-mobile i-note',
+        'iMobileTablet'     => 'i-mobile i-note',
         // http://www.tolino.de/de/vergleichen/
-        'TolinoTablet'  => 'tolino tab [0-9.]+|tolino shine',
+        'TolinoTablet'      => 'tolino tab [0-9.]+|tolino shine',
         // AudioSonic - a Kmart brand
         // http://www.kmart.com.au/webapp/wcs/stores/servlet/Search?langId=-1&storeId=10701&catalogId=10001&categoryId=193001&pageSize=72&currentPage=1&searchCategory=193001%2b4294965664&sortBy=p_MaxPrice%7c1
-        'AudioSonicTablet' => '\bC-22Q|T7-QC|T-17B|T-17P\b',
+        'AudioSonicTablet'  => '\bC-22Q|T7-QC|T-17B|T-17P\b',
         // AMPE Tablets - http://www.ampe.com.my/product-category/tablets/
         // @todo: add them gradually to avoid conflicts.
-        'AMPETablet' => 'Android.* A78 ',
+        'AMPETablet'        => 'Android.* A78 ',
         // Skk Mobile - http://skkmobile.com.ph/product_tablets.php
-        'SkkTablet' => 'Android.* (SKYPAD|PHOENIX|CYCLOPS)',
+        'SkkTablet'         => 'Android.* (SKYPAD|PHOENIX|CYCLOPS)',
         // Tecno Mobile (only tablet) - http://www.tecno-mobile.com/index.php/product?filterby=smart&list_order=all&page=1
-        'TecnoTablet' => 'TECNO P9',
+        'TecnoTablet'       => 'TECNO P9',
         // JXD (consoles & tablets) - http://jxd.hk/products.asp?selectclassid=009008&clsid=3
-        'JXDTablet' => 'Android.*\b(F3000|A3300|JXD5000|JXD3000|JXD2000|JXD300B|JXD300|S5800|S7800|S602b|S5110b|S7300|S5300|S602|S603|S5100|S5110|S601|S7100a|P3000F|P3000s|P101|P200s|P1000m|P200m|P9100|P1000s|S6600b|S908|P1000|P300|S18|S6600|S9100)\b',
+        'JXDTablet'         => 'Android.*\b(F3000|A3300|JXD5000|JXD3000|JXD2000|JXD300B|JXD300|S5800|S7800|S602b|S5110b|S7300|S5300|S602|S603|S5100|S5110|S601|S7100a|P3000F|P3000s|P101|P200s|P1000m|P200m|P9100|P1000s|S6600b|S908|P1000|P300|S18|S6600|S9100)\b',
         // i-Joy tablets - http://www.i-joy.es/en/cat/products/tablets/
-        'iJoyTablet' => 'Tablet (Spirit 7|Essentia|Galatea|Fusion|Onix 7|Landa|Titan|Scooby|Deox|Stella|Themis|Argon|Unique 7|Sygnus|Hexen|Finity 7|Cream|Cream X2|Jade|Neon 7|Neron 7|Kandy|Scape|Saphyr 7|Rebel|Biox|Rebel|Rebel 8GB|Myst|Draco 7|Myst|Tab7-004|Myst|Tadeo Jones|Tablet Boing|Arrow|Draco Dual Cam|Aurix|Mint|Amity|Revolution|Finity 9|Neon 9|T9w|Amity 4GB Dual Cam|Stone 4GB|Stone 8GB|Andromeda|Silken|X2|Andromeda II|Halley|Flame|Saphyr 9,7|Touch 8|Planet|Triton|Unique 10|Hexen 10|Memphis 4GB|Memphis 8GB|Onix 10)',
+        'iJoyTablet'        => 'Tablet (Spirit 7|Essentia|Galatea|Fusion|Onix 7|Landa|Titan|Scooby|Deox|Stella|Themis|Argon|Unique 7|Sygnus|Hexen|Finity 7|Cream|Cream X2|Jade|Neon 7|Neron 7|Kandy|Scape|Saphyr 7|Rebel|Biox|Rebel|Rebel 8GB|Myst|Draco 7|Myst|Tab7-004|Myst|Tadeo Jones|Tablet Boing|Arrow|Draco Dual Cam|Aurix|Mint|Amity|Revolution|Finity 9|Neon 9|T9w|Amity 4GB Dual Cam|Stone 4GB|Stone 8GB|Andromeda|Silken|X2|Andromeda II|Halley|Flame|Saphyr 9,7|Touch 8|Planet|Triton|Unique 10|Hexen 10|Memphis 4GB|Memphis 8GB|Onix 10)',
         // http://www.intracon.eu/tablet
-        'FX2Tablet' => 'FX2 PAD7|FX2 PAD10',
+        'FX2Tablet'         => 'FX2 PAD7|FX2 PAD10',
+        'Wink'              => 'Wink Elite 7.85',
         // http://www.xoro.de/produkte/
         // @note: Might be the same brand with 'Simply tablets'
         'XoroTablet'        => 'KidsPAD 701|PAD[ ]?712|PAD[ ]?714|PAD[ ]?716|PAD[ ]?717|PAD[ ]?718|PAD[ ]?720|PAD[ ]?721|PAD[ ]?722|PAD[ ]?790|PAD[ ]?792|PAD[ ]?900|PAD[ ]?9715D|PAD[ ]?9716DR|PAD[ ]?9718DR|PAD[ ]?9719QR|PAD[ ]?9720QR|TelePAD1030|Telepad1032|TelePAD730|TelePAD731|TelePAD732|TelePAD735Q|TelePAD830|TelePAD9730|TelePAD795|MegaPAD 1331|MegaPAD 1851|MegaPAD 2151',
@@ -318,39 +338,40 @@ class UAParser{
         // http://www.captiva-power.de/products.html#tablets-en
         'CaptivaTablet'     => 'CAPTIVA PAD',
         // IconBIT - http://www.iconbit.com/products/tablets/
-        'IconbitTablet' => 'NetTAB|NT-3702|NT-3702S|NT-3702S|NT-3603P|NT-3603P|NT-0704S|NT-0704S|NT-3805C|NT-3805C|NT-0806C|NT-0806C|NT-0909T|NT-0909T|NT-0907S|NT-0907S|NT-0902S|NT-0902S',
+        'IconbitTablet'     => 'NetTAB|NT-3702|NT-3702S|NT-3702S|NT-3603P|NT-3603P|NT-0704S|NT-0704S|NT-3805C|NT-3805C|NT-0806C|NT-0806C|NT-0909T|NT-0909T|NT-0907S|NT-0907S|NT-0902S|NT-0902S',
         // http://www.teclast.com/topic.php?channelID=70&topicID=140&pid=63
-        'TeclastTablet' => 'T98 4G|\bP80\b|\bX90HD\b|X98 Air|X98 Air 3G|\bX89\b|P80 3G|\bX80h\b|P98 Air|\bX89HD\b|P98 3G|\bP90HD\b|P89 3G|X98 3G|\bP70h\b|P79HD 3G|G18d 3G|\bP79HD\b|\bP89s\b|\bA88\b|\bP10HD\b|\bP19HD\b|G18 3G|\bP78HD\b|\bA78\b|\bP75\b|G17s 3G|G17h 3G|\bP85t\b|\bP90\b|\bP11\b|\bP98t\b|\bP98HD\b|\bG18d\b|\bP85s\b|\bP11HD\b|\bP88s\b|\bA80HD\b|\bA80se\b|\bA10h\b|\bP89\b|\bP78s\b|\bG18\b|\bP85\b|\bA70h\b|\bA70\b|\bG17\b|\bP18\b|\bA80s\b|\bA11s\b|\bP88HD\b|\bA80h\b|\bP76s\b|\bP76h\b|\bP98\b|\bA10HD\b|\bP78\b|\bP88\b|\bA11\b|\bA10t\b|\bP76a\b|\bP76t\b|\bP76e\b|\bP85HD\b|\bP85a\b|\bP86\b|\bP75HD\b|\bP76v\b|\bA12\b|\bP75a\b|\bA15\b|\bP76Ti\b|\bP81HD\b|\bA10\b|\bT760VE\b|\bT720HD\b|\bP76\b|\bP73\b|\bP71\b|\bP72\b|\bT720SE\b|\bC520Ti\b|\bT760\b|\bT720VE\b|T720-3GE|T720-WiFi',
+        'TeclastTablet'     => 'T98 4G|\bP80\b|\bX90HD\b|X98 Air|X98 Air 3G|\bX89\b|P80 3G|\bX80h\b|P98 Air|\bX89HD\b|P98 3G|\bP90HD\b|P89 3G|X98 3G|\bP70h\b|P79HD 3G|G18d 3G|\bP79HD\b|\bP89s\b|\bA88\b|\bP10HD\b|\bP19HD\b|G18 3G|\bP78HD\b|\bA78\b|\bP75\b|G17s 3G|G17h 3G|\bP85t\b|\bP90\b|\bP11\b|\bP98t\b|\bP98HD\b|\bG18d\b|\bP85s\b|\bP11HD\b|\bP88s\b|\bA80HD\b|\bA80se\b|\bA10h\b|\bP89\b|\bP78s\b|\bG18\b|\bP85\b|\bA70h\b|\bA70\b|\bG17\b|\bP18\b|\bA80s\b|\bA11s\b|\bP88HD\b|\bA80h\b|\bP76s\b|\bP76h\b|\bP98\b|\bA10HD\b|\bP78\b|\bP88\b|\bA11\b|\bA10t\b|\bP76a\b|\bP76t\b|\bP76e\b|\bP85HD\b|\bP85a\b|\bP86\b|\bP75HD\b|\bP76v\b|\bA12\b|\bP75a\b|\bA15\b|\bP76Ti\b|\bP81HD\b|\bA10\b|\bT760VE\b|\bT720HD\b|\bP76\b|\bP73\b|\bP71\b|\bP72\b|\bT720SE\b|\bC520Ti\b|\bT760\b|\bT720VE\b|T720-3GE|T720-WiFi',
         // Onda - http://www.onda-tablet.com/buy-android-onda.html?dir=desc&limit=all&order=price
-        'OndaTablet' => '\b(V975i|Vi30|VX530|V701|Vi60|V701s|Vi50|V801s|V719|Vx610w|VX610W|V819i|Vi10|VX580W|Vi10|V711s|V813|V811|V820w|V820|Vi20|V711|VI30W|V712|V891w|V972|V819w|V820w|Vi60|V820w|V711|V813s|V801|V819|V975s|V801|V819|V819|V818|V811|V712|V975m|V101w|V961w|V812|V818|V971|V971s|V919|V989|V116w|V102w|V973|Vi40)\b[\s]+',
+        'OndaTablet'        => '\b(V975i|Vi30|VX530|V701|Vi60|V701s|Vi50|V801s|V719|Vx610w|VX610W|V819i|Vi10|VX580W|Vi10|V711s|V813|V811|V820w|V820|Vi20|V711|VI30W|V712|V891w|V972|V819w|V820w|Vi60|V820w|V711|V813s|V801|V819|V975s|V801|V819|V819|V818|V811|V712|V975m|V101w|V961w|V812|V818|V971|V971s|V919|V989|V116w|V102w|V973|Vi40)\b[\s]+',
         'JaytechTablet'     => 'TPC-PA762',
         'BlaupunktTablet'   => 'Endeavour 800NG|Endeavour 1010',
         // http://www.digma.ru/support/download/
         // @todo: Ebooks also (if requested)
-        'DigmaTablet' => '\b(iDx10|iDx9|iDx8|iDx7|iDxD7|iDxD8|iDsQ8|iDsQ7|iDsQ8|iDsD10|iDnD7|3TS804H|iDsQ11|iDj7|iDs10)\b',
+        'DigmaTablet'       => '\b(iDx10|iDx9|iDx8|iDx7|iDxD7|iDxD8|iDsQ8|iDsQ7|iDsQ8|iDsD10|iDnD7|3TS804H|iDsQ11|iDj7|iDs10)\b',
         // http://www.evolioshop.com/ro/tablete-pc.html
         // http://www.evolio.ro/support/downloads_static.html?cat=2
         // @todo: Research some more
-        'EvolioTablet' => 'ARIA_Mini_wifi|Aria[ _]Mini|Evolio X10|Evolio X7|Evolio X8|\bEvotab\b|\bNeura\b',
+        'EvolioTablet'      => 'ARIA_Mini_wifi|Aria[ _]Mini|Evolio X10|Evolio X7|Evolio X8|\bEvotab\b|\bNeura\b',
         // @todo http://www.lavamobiles.com/tablets-data-cards
-        'LavaTablet' => 'QPAD E704|\bIvoryS\b|E-TAB IVORY|\bE-TAB\b',
+        'LavaTablet'        => 'QPAD E704|\bIvoryS\b|E-TAB IVORY|\bE-TAB\b',
         // https://www.celkonmobiles.com/?_a=categoryphones&sid=2
-        'CelkonTablet' => 'CT695|CT888|CT[\s]?910|CT7 Tab|CT9 Tab|CT3 Tab|CT2 Tab|CT1 Tab|C820|C720|\bCT-1\b',
+        'CelkonTablet'      => 'CT695|CT888|CT[\s]?910|CT7 Tab|CT9 Tab|CT3 Tab|CT2 Tab|CT1 Tab|C820|C720|\bCT-1\b',
         // http://www.wolderelectronics.com/productos/manuales-y-guias-rapidas/categoria-2-miTab
-        'WolderTablet' => 'miTab \b(DIAMOND|SPACE|BROOKLYN|NEO|FLY|MANHATTAN|FUNK|EVOLUTION|SKY|GOCAR|IRON|GENIUS|POP|MINT|EPSILON|BROADWAY|JUMP|HOP|LEGEND|NEW AGE|LINE|ADVANCE|FEEL|FOLLOW|LIKE|LINK|LIVE|THINK|FREEDOM|CHICAGO|CLEVELAND|BALTIMORE-GH|IOWA|BOSTON|SEATTLE|PHOENIX|DALLAS|IN 101|MasterChef)\b',
+        'WolderTablet'      => 'miTab \b(DIAMOND|SPACE|BROOKLYN|NEO|FLY|MANHATTAN|FUNK|EVOLUTION|SKY|GOCAR|IRON|GENIUS|POP|MINT|EPSILON|BROADWAY|JUMP|HOP|LEGEND|NEW AGE|LINE|ADVANCE|FEEL|FOLLOW|LIKE|LINK|LIVE|THINK|FREEDOM|CHICAGO|CLEVELAND|BALTIMORE-GH|IOWA|BOSTON|SEATTLE|PHOENIX|DALLAS|IN 101|MasterChef)\b',
+        'Wayteq'            => 'xTAB-7X',
         // http://www.mi.com/en
-        'MiTablet' => '\bMI PAD\b|\bHM NOTE 1W\b',
+        'MiTablet'          => '\bMI PAD\b|\bHM NOTE 1W\b',
         // http://www.nbru.cn/index.html
-        'NibiruTablet' => 'Nibiru M1|Nibiru Jupiter One',
+        'NibiruTablet'      => 'Nibiru M1|Nibiru Jupiter One',
         // http://navroad.com/products/produkty/tablety/
-        'NexoTablet' => 'NEXO NOVA|NEXO 10|NEXO AVIO|NEXO FREE|NEXO GO|NEXO EVO|NEXO 3G|NEXO SMART|NEXO KIDDO|NEXO MOBI',
+        'NexoTablet'        => 'NEXO NOVA|NEXO 10|NEXO AVIO|NEXO FREE|NEXO GO|NEXO EVO|NEXO 3G|NEXO SMART|NEXO KIDDO|NEXO MOBI',
         // http://leader-online.com/new_site/product-category/tablets/
         // http://www.leader-online.net.au/List/Tablet
-        'LeaderTablet' => 'TBLT10Q|TBLT10I|TBL-10WDKB|TBL-10WDKBO2013|TBL-W230V2|TBL-W450|TBL-W500|SV572|TBLT7I|TBA-AC7-8G|TBLT79|TBL-8W16|TBL-10W32|TBL-10WKB|TBL-W100',
+        'LeaderTablet'      => 'TBLT10Q|TBLT10I|TBL-10WDKB|TBL-10WDKBO2013|TBL-W230V2|TBL-W450|TBL-W500|SV572|TBLT7I|TBA-AC7-8G|TBLT79|TBL-8W16|TBL-10W32|TBL-10WKB|TBL-W100',
         // http://www.datawind.com/ubislate/
-        'UbislateTablet' => 'UbiSlate[\s]?7C',
+        'UbislateTablet'    => 'UbiSlate[\s]?7C',
         // http://www.pocketbook-int.com/ru/support
-        'PocketBookTablet' => 'Pocketbook',
+        'PocketBookTablet'  => 'Pocketbook',
         // http://www.tesco.com/direct/hudl/
         'Hudl'              => 'Hudl HT7S3',
         // http://www.telstra.com.au/home-phone/thub-2/
