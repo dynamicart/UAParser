@@ -1,5 +1,7 @@
 <?php
 
+namespace dynamicart;
+
 /**
  * User Agent Parser > UAParser
  * Parse any user agent string
@@ -11,19 +13,16 @@
  *  The browser info contain tha browser or client version (like MSOffice 15 or Chrome 38...)
  *
  * The mobile/tablet/os/browser patterns based on Mobile Detect Library 2.8.17, but this was just the start point.
- * @link        Homepage:     http://mobiledetect.net
- *              GitHub Repo:  https://github.com/serbanghita/Mobile-Detect
  *
  * The patterns are continuously grow and change.
  *
- * @author      János Szentgyörgyi <puttocska@gmail.com>
+ * @author János Szentgyörgyi <puttocska@gmail.com>
  *
- * @license     Code and contributions have 'MIT License'
+ * @license https://raw.githubusercontent.com/dynamicart/UAParser/master/LICENSE MIT
+ * @link http://mobiledetect.net Homepage
+ * @link https://github.com/serbanghita/Mobile-Detect GitHub Repository
  *
- * @link        Homepage:     http://mobiledetect.net
- *              GitHub Repo:  https://github.com/serbanghita/Mobile-Detect
- *
- * @version     0.1
+ * @version 0.1
  */
 class UAParser{
     const deviceMobile = 'mobile';
