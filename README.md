@@ -35,7 +35,7 @@ https://github.com/dynamicart/UAParser/blob/master/LICENSE
 
 GitHub Repo: https://github.com/dynamicart/UAParser
 
-@version: 0.1.2
+@version: 0.1.3
 
 ## Warning ##
 This script version is very early! Don't trust in the result...
