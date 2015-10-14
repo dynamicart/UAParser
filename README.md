@@ -2,7 +2,7 @@ User Agent Parser > UAParser
 ============================
 
 ## Parse any user agent string by PHP ##
-- Detect the device (mobile|tablet|desktop or service)
+- Detect the device (mobile|tablet|smartTV|desktop or service)
 - The device contain the brand (like Samsung), and contain the phone or tablet type (like Prestigio PAP5400DUO).
 - Detect visitor Operation System like Windows, Linux, OSX, Android...
 - The OS info contain the OS version (like Windows NT5.1 or Android 4.2.2).
@@ -35,7 +35,17 @@ https://github.com/dynamicart/UAParser/blob/master/LICENSE
 
 GitHub Repo: https://github.com/dynamicart/UAParser
 
-@version: 0.1.3
+## What's new ##
+
+@version: 0.2.0
++ smartTV detection
++ pattern updates
++ recheck the detected device, if parsed device is 'desktop' and parsed OS is not desktopOS, then device set to 'mobile'
+
+version: 0.1.3
++ mobile & tablet patterns updated, 
++ mobile patterns are sorted,
++ device type is fixed  
 
 ## Warning ##
 This script version is very early! Don't trust in the result...

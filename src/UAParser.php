@@ -5,7 +5,7 @@ namespace dynamicart;
 /**
  * User Agent Parser > UAParser
  * Parse any user agent string
- * Detect the device (mobile|tablet|desktop or service)
+ * Detect the device (mobile|tablet|smartTV|desktop or service)
  *  The device contain the brand (like Samsung), and contain the phone or tablet type (like Prestigio PAP5400DUO).
  * Detect visitor Operation System like Windows, Linux, OSX, Android...
  *  The OS info contain the OS version (like Windows NT5.1 or Android 4.2.2).
@@ -22,13 +22,14 @@ namespace dynamicart;
  * @link http://mobiledetect.net Homepage
  * @link https://github.com/serbanghita/Mobile-Detect GitHub Repository
  *
- * @version 0.1.3
+ * @version 0.2.0
  */
 class UAParser{
     const deviceMobile = 'mobile';
     const deviceTablet = 'tablet';
     const deviceService = 'service';
     const deviceDesktop = 'desktop';
+    const deviceSmartTV = 'smartTV';
 
     /**
      * No desktop, mobile or tablet device, this server services..
@@ -43,6 +44,17 @@ class UAParser{
     );
 
     /**
+     * pattern for detecting SmartTV
+     * https://udger.com/resources/ua-list/device-detail?device=Smart%20TV
+     * @var array
+     */
+    private $patternSmartTV = array(
+        'Philips'               => 'PhilipsTV',
+        'LG'                    => 'NetCast',
+        'unknown'               => 'smartTV',
+    );
+
+    /**
      * pattern for detecting mobile device
      * @var array
      */
@@ -52,7 +64,7 @@ class UAParser{
         // Motorola must upper than Lenovo, because Lenovo tags is similar, like A853 ('A' & 3digit)
         'Motorola'      => 'Motorola.*(i1|TITANIUM)|'.
             // Android and other short motorola tag
-            'Android.*\b(Motorola|\bMoto E\b|'.
+            'Android.*\b(Motorola|\bMoto (E|G)\b|'.
             'DROIDX|DROID BIONIC|DROID4|HRI39|MOT-|Xoom|'.
             'A1260|A1680|A555|A853|A855|A953|A955|A956|'.
             'ELECTRIFY|i867|i940|'.
@@ -60,7 +72,7 @@ class UAParser{
             'ME501|ME502|ME511|ME525|ME600|ME632|ME722|ME811|ME860|ME863|ME865|'.
             'MT620|MT710|MT716|MT720|MT810|MT870|MT917|'.
             'WX435|WX445|'.
-            'XT300|XT301|XT311|XT316|XT317|XT319|XT320|XT390|XT502|XT530|XT531|XT532|XT535|XT603|XT610|XT611|XT615|XT681|XT701|XT702|XT711|XT720|XT800|XT806|XT860|XT862|XT875|XT882|XT883|XT894|XT901|XT907|XT909|XT910|XT912|XT928|XT926|XT915|XT919|XT925|XT1021)\b',
+            'XT300|XT301|XT311|XT316|XT317|XT319|XT320|XT390|XT502|XT530|XT531|XT532|XT535|XT603|XT610|XT611|XT615|XT681|XT701|XT702|XT711|XT720|XT800|XT806|XT860|XT862|XT875|XT882|XT883|XT894|XT901|XT907|XT909|XT910|XT912|XT928|XT926|XT915|XT919|XT925|XT1021|XT1032|XT1068)\b',
 
         // ABC...
 
@@ -69,24 +81,26 @@ class UAParser{
         'Alcatel'       => 'Alcatel.*(3040G)|'.
             'ALCATEL.?ONE.?TOUCH.?([a-zA-Z0-9]+)|'.
             'ONE TOUCH \b(4033X|4015X|6012X|4015D|6012D)\b|'.
-            'Android.*\b(P360X|7050Y|6050Y|6036Y|4018D|4032X|5050Y|4018X|6037Y)\b',
+            'Android.*\b(4035D|P360X|7050Y|6050Y|6036Y|4018D|4032X|5050Y|4018X|6037Y|6016X)\b',
         'AllView'       => '\bALLVIEW.*(Impera|A4ALL|P5|A6)|'.
-            'Android.*(\bALLVIEW|A4You|P5 Symbol)',
+            'Android.*(\bALLVIEW|A4You|P5 Symbol|V1_Viper)',
         // Alps are samsung clones?
         'Alps'          => 'discovery89_tb_jb2|v89_gq3002sc|706_v92_jbla_fhd|rmt89_tb_jb2|c201v82ds_jbl_3mf5_qhd|e1902_v77_jblw005',
 
         'Amazon'        => 'SD4930UR',
         'Amoi'          => 'Android.*\b(Amoi)\b',
-        'Archos'        => 'Archos 50 Platinum|Archos 50b Platinum',
+        'Archos'        => 'Archos 50(b)? (Platinum|Neon)',
 
         'Asus'          => 'PadFone.*Mobile|'.
             'Asus.*(Galaxy|T00N|TF300T|TF700T|T00J)|'.
             'Android.*(\bK01A\b|\bK01E\b|\bK007\b|\bK012\b|\bK013\b)',
 
+        'BeexMobile'    => 'Beex (Flare|Conquest|DUO|Freedom|Light|Luna|M2D|M2G|M4|M45|M5|Massive|Octagon|Senior|Legend|M1D|M1G)',
         'BlackBerry'    => 'BlackBerry|\bBB10\b|rim[0-9]+',
         'BLU'           => 'Studio 5.3s',
 
         'Cat'           => 'Android.*(\bB15(Q)?\b)',
+        'ConCorde'      => 'ConCorde.?Smartphone.?(5005.?NFC|5001|6500)',
         'Cubot'         => 'Android.*(GT95|GT72+)',
         'Cynus'         => 'Cynus T5',
 
@@ -105,20 +119,21 @@ class UAParser{
 
         'Haier'         => 'Haier HW-W910|Android.*(\bW716S\b)',
         'HP'            => 'HP Slate 6 Voice Tab',
-        'HTC'           => 'HTC.*(Sensation|Evo|Vision|Explorer|6800|8100|8900|A7272|S510e|C110e|Legend|Desire.?(610)|T8282|M8x|One_M8|M8Sx|OneXplus|WildfireS_A510e|M8MINx)|'.
+        'HTC'           => 'HTC.*(Sensation|Evo|Vision|Explorer|One.?(X|Mini|M8)?|Wildfire S A510e|M8w|6800|8100|8900|A7272|S510e|C110e|Legend|Desire.?(310|500|610|C|S|X)?|T8282|M8x|One_M8|M8Sx|OneXplus|WildfireS_A510e|M8MINx)|'.
             'Android.*\b(EVO|T-Mobile G1|Z520m|M9|SensationXL_Beats_X315e|ADR6200|ADR6400L|ADR6425|001HT|Inspire 4G|APX515CKT|Qtek9090|APA9292KT|HD_mini|Sensation.*Z710e|PG86100|Z715e|Desire.*(A8181|HD))\b',
         'HUAWEI'        => 'HUAWEI.?[a-zA-Z0-9\-]+|'.
-            'Android.*(U8500|H60-L04)',
+            'Android.*(U8500|H60-L04|CHM-U01)',
 
         'iMobile'        => 'i-mobile \b(IQ|i-STYLE|idea|ZAA|Hitz)\b',
         'INQ'           => '\bINQ\b',
         'iPhone'        => '\b(iPhone|iPod)\b',
 
-        'Jiayu'         => 'JY-G2|JY-G3|JiaYu G4S|JIAYU S2|JIAYU-G3',
+        'Jiayu'         => 'JY-(G2|G3|G5)|JiaYu.?(G4S|S2|G3)',
 
         'Kazam'         => 'Tornado 348',
+        'Kingzone'      => 'K1 turbo',
 
-        'Leagoo'        => '\b(Lead 2)\b',
+        'Leagoo'        => '\b(Lead \d(S)?)\b',
         'Lenovo'        => 'Lenovo.?[a-zA-Z][0-9]{2,3}([a-zA-Z])?|'.
             'Lenovo.*X2-[a-zA-Z]U|'.
             'Lenovo.*(Z2|A5000|A6000)|'.
@@ -126,27 +141,31 @@ class UAParser{
 
         'LG'            => 'LG[- ]?[a-zA-Z0-9]+|Optimus 4X HD',
 
-        'M-Tech'        => '\baTAB5C\b|aTAB3502D|Atab403|\baTAB5\b',
+        'M-Tech'        => '\b(aTAB5C|aTAB3502D|Atab403|aTAB5|aTAB503D)\b',
         'Mann'          => '\bzug3|zug 3\b',
         'MediaTek'      => 'Android.*(\bMT6572\b)',
         'Medion'        => 'Android.*(\bP4502\b)',
         'Meizu'         => 'Android.*(\bm1 note\b)',
         'Mobiwire'      => 'Android.*(\bAhiga\b)',
+        'Modecom'       => 'Xino Z25 X2',
         'MPIE'          => 'Android.*(\b909T\b)',
 
         'Navon'         => 'Android.*\b(M402|M450|S400_01|M502|D402|D501|D500|M500|F550)\b',
+        'Neken'         => 'N6',
         'Nintendo'      => 'Nintendo 3DS',
         'Nokia'         => 'Nokia.*(X|XL|C5|5800d|Lumia [0-9]+|Lumia)|'.
             '\bNokia([0-9])?\b|'.
-            'Android.*\b(Series40|Series60|S60|N900|Windows Phone.*ARM)\b',
+            'Windows Phone'.
+            'Android.*\b(Series40|Series60|S60|N900)\b',
 
 
         'OnePlus'       => 'Android.*(\bA0001\b)',
         'Orange'        => 'Orange Yomi',
-        'Overmax'       => 'OV-Vertis-01',
+        'Overmax'       => 'OV-Vertis-(01|02)|OV_V(\d)',
 
         'Palm'          => 'PalmSource|\bPalm\b', // avantgo|blazer|elaine|hiptop|plucker|xiino ;
         'Pantech'       => 'PANTECH.*(IM-|VEGA|PT|P|ADR|CDM|TXT|IS|C)[0-9]+',
+        'Philips'       => 'Philips S308',
         'Prestigio'     => 'Prestigio|(PSP|PAP)[0-9]{4}(DUO)?',
 
         'Qilive'        => 'Qilive (40|50|53)|'.
@@ -159,11 +178,11 @@ class UAParser{
         'SimValley'     => '\b(SP-80|XT-930|SX-340|XT-930|SX-310|SP-360|SP60|SPT-800|SP-120|SPT-800|SP-140|SPX-5|SPX-8|SP-100|SPX-8|SPX-12)\b',
         'SonyEricsson'  => 'SonyEricsson.?[a-zA-Z0-9]{2,6}',
         'Sony'          => 'Sony.?[a-zA-Z0-9]{2,6}|'.
-            'Android.*\b(C1505|C5303|C1905|C6603|C6903|C2105|C6903|C1605|C2104|C6833|C5503|'.
+            'Android.*\b(C1505|C5303|C1905|C6603|C6903|C2105|C6903|C1605|C2104|C6833|C5503|C2005|C2305|'.
             'D5803|D5503|D6503|D2303|D2303|D2005|D6603|D5303|D5103|D2203|D6653|D2403|D2302|'.
-            'E2003|E2105|E2303|'.
+            'E2003|E2105|E2303|E2104|'.
             'LT26i|LT26ii|LT26i|LT26ii|LT22i|LT25i|LT30p|LT28h|LT26w|LT18i|'.
-            'SK17i|ST25a|ST26i|ST21i|ST23i|ST25i|ST17i|ST18i|'.
+            'SK17i|ST25a|ST26i|ST21i|ST23i|ST25i|ST17i|ST18i|ST27i|ST15i|'.
             'Xperia (SP|Acro S))\b',
 
         'Telenor'       => 'Telenor.?One.?Touch.?[a-zA-Z]?|'.
@@ -174,7 +193,7 @@ class UAParser{
 
         'Vega'          => '\bQ7108\b',
         'Vertu'         => 'Vertu.*\b(Ltd|Ascent|Ayxta|Constellation(F|Quest)|Monika|Signature)\b',
-        'Vodafone'      => 'vodafone|VF-895N|VF685',
+        'Vodafone'      => 'vodafone|VF-895N|VF685|VF695',
 
         'WayTeq'        => 'TALK_5H',
         'Wiko'          => '\b(KITE 4G|HIGHWAY|GETAWAY|STAIRWAY|DARKSIDE|DARKFULL|DARKNIGHT|DARKMOON|SLIDE|WAX 4G|RAINBOW|BLOOM|SUNSET|GOA|LENNY|BARRY|IGGY|OZZY|CINK FIVE|CINK PEAX|CINK PEAX 2|CINK SLIM|CINK SLIM 2|CINK +|CINK KING|CINK PEAX|CINK SLIM|SUBLIM)\b',
@@ -183,14 +202,14 @@ class UAParser{
         'Xiaomi'        => 'Android.*(\bHM 1SW\b|\bHM 1S\b|\bMI 3W\b|\bMI 3W\b|\bMI 2S\b|HM NOTE 1LTE)',
 
         'Zopo'          => 'Android.*(\bZP999\b)|ZOPO 9xxQuad',
-        'ZTE'           => '\b(KIS PLUS|Blade|ZTE-SKATE|Kis|Grand X In|Cosmote Smart Share|X9180)\b|'.
-            'ZTE (V795|V970|V807)',
+        'ZTE'           => '\b(KIS PLUS|Blade|ZTE-SKATE|Kis|Grand X In|Cosmote (Xplore|Smart Share)|X9180)\b|'.
+            'ZTE (V795|V970|V807|Q705U)',
 
         //
         'Opera?'        => 'Android.*(Opera Mobi|Opera Mini)',
         'N3?'           => 'Android.*(\bN3\b Build)',
 
-        // TODO: FIZZ|V9|V2|X8|W100|01_v89_gq2008s_89t|Q7901L2C|Discovery
+        // TODO: FIZZ|V9|V2|X8|W100|i6|Q4 Android|01_v89_gq2008s_89t|Q7901L2C|Discovery|Rock HU|AJM|I50|MT6582_TD|Skate
         'GenericPhone'  => '\b(Tapatalk|PDA|mmp|pocket|psp|symbian|Smartphone|smartfon|treo|up.browser|up.link|wap|MAUI.*WAP.*Browser|Android; Mobile)\b',
     );
 
@@ -208,6 +227,7 @@ class UAParser{
         // http://docs.aws.amazon.com/silk/latest/developerguide/user-agent.html
         'Kindle'            => 'Kindle|Silk.*Accelerated|Android.*\b(KFOT|KFTT|KFJWI|KFJWA|KFOTE|KFSOWI|KFTHWI|KFTHWA|KFAPWI|KFAPWA|WFJWAE|KFSAWA|KFSAWI|KFASWI)\b',
         'Lark'              => 'Lark Ulitmate 7i',
+        'BeexMobile'        => 'Cobra (SD|HD)|(E2|D2) Tablet|Flash|Minibee|Rock|Rainbow|S1|S2|S4|S5|Thunderbolt',
         // Only the Surface tablets with Windows RT are considered mobile.
         // http://msdn.microsoft.com/en-us/library/ie/hh920767(v=vs.85).aspx
         'SurfaceTablet'     => 'Windows NT [0-9.]+; ARM;.*(Tablet|ARMBJS)',
@@ -215,7 +235,8 @@ class UAParser{
         'HPTablet'          => 'HP Slate (7|8|10)|HP ElitePad 900|hp-tablet|EliteBook.*Touch|HP 8|Slate 21|HP SlateBook 10',
         // Watch out for PadFone, see #132.
         // http://www.asus.com/de/Tablets_Mobile/Memo_Pad_Products/
-        'AsusTablet'        => '^.*PadFone((?!Mobile).)*$|Transformer|TF101|K00Z|TF101G|TF300T|TF300TG|TF300TL|TF700T|TF700KL|TF701T|TF810C|ME171|ME301T|ME302C|ME371MG|ME370T|ME372MG|ME172V|ME173X|ME400C|Slider SL101|\bK00F\b|\bK00C\b|\bK00E\b|\bK00L\b|TX201LA|ME176C|ME102A|\bM80TA\b|ME372CL|ME560CG|ME372CG|ME302KL| K010 | K017 |ME572C|ME103K|ME170C|ME171C|\bME70C\b|ME581C|ME581CL|ME8510C|ME181C',
+        'AsusTablet'        => '^.*PadFone((?!Mobile).)*$|'.
+            '\b(Transformer|TF101|K00Z|TF101G|TF300T|TF300TG|TF300TL|TF700T|TF700KL|TF701T|TF810C|ME171|ME301T|ME302C|ME371MG|ME370T|ME372MG|ME172V|ME173X|ME400C|Slider SL101|K00F|K00C|K00E|K00L|TX201LA|ME176C|ME102A|M80TA|ME372CL|ME560CG|ME372CG|ME302KL|K010|K011|K017|ME572C|ME103K|ME170C|ME171C|ME70C|ME581C|ME581CL|ME8510C|ME181C)\b',
         'BlackBerryTablet'  => 'PlayBook|RIM Tablet',
         'Colorovo'          => 'CTLite8 2.0',
         'HTCtablet'         => 'HTC_Flyer_P512|HTC Flyer|HTC Jetstream|HTC-P715a|HTC EVO View 4G|PG41200|PG09410',
@@ -231,7 +252,7 @@ class UAParser{
         // http://eu.computers.toshiba-europe.com/innovation/family/Tablets/1098744/banner_id/tablet_footerlink/
         // http://us.toshiba.com/tablets/tablet-finder
         // http://www.toshiba.co.jp/regza/tablet/
-        'ToshibaTablet'     => 'Android.*(AT100|AT105|AT200|AT205|AT270|AT275|AT300|AT305|AT1S5|AT500|AT570|AT700|AT830)|TOSHIBA.*FOLIO',
+        'ToshibaTablet'     => 'Android.*(AT10-A|AT100|AT105|AT200|AT205|AT270|AT275|AT300|AT305|AT1S5|AT500|AT570|AT700|AT830)|TOSHIBA.*FOLIO',
         // http://www.nttdocomo.co.jp/english/service/developer/smart_phone/technical_info/spec/index.html
         // http://www.lg.com/us/tablets
         'LGTablet'          => '\bL-06C|LG-V909|LG-V900|LG-V700|LG-V510|LG-V500|LG-V410|LG-V400|LG-VK810\b',
@@ -239,7 +260,7 @@ class UAParser{
         'FujitsuTablet'     => 'Android.*\b(F-01D|F-02F|F-05E|F-10D|M532|Q572)\b',
         'Alcor'             => '\bD785M\b|\bQ933RS\b|Alcor.*(Zest|Access).*Q[0-9]{3}([a-zA-Z]{1,2})?|Access_D746I|Access-O719R|Access Q881M',
         // Prestigio Tablets http://www.prestigio.com/support
-        'PrestigioTablet'   => 'PMP3170B|PMP3270B|PMP3470B|PMP7170B|PMP3370B|PMP3570C|PMP5870C|PMP3670B|PMP5570C|PMP5770D|PMP3970B|PMP3870C|PMP5580C|PMP5880D|PMP5780D|PMP5588C|PMP7280C|PMP7280C3G|PMP7280|PMP7880D|PMP5597D|PMP5597|PMP7100D|PER3464|PER3274|PER3574|PER3884|PER5274|PER5474|PMP5097CPRO|PMP5097|PMP7380D|PMP5297C|PMP5297C_QUAD|PMP812E|PMP812E3G|PMP812F|PMP810E|PMP880TD|PMT3017|PMT3037|PMT3047|PMT3057|PMT7008|PMT5887|PMT5001|PMT5002|PMP5670C_DUO|QUANTUM_785|PMP5785C_QUAD|PMT3377_Wi|GV7777|PMP3007C3G',
+        'PrestigioTablet'   => 'Android.*\b((PMP|PER|PMT)([_0-9a-zA-Z])+|GV7777|QUANTUM_785)\b',
         // http://support.lenovo.com/en_GB/downloads/default.page?#
         'LenovoTablet'      => 'Idea(Tab|Pad)( A1|A10| K1|)|ThinkPad([ ]+)?Tablet|Lenovo.?[a-zA-Z][0-9]{2,3}([a-zA-Z]{1,2})?|Tab2A7-10F|Lenovo.*(TAB S8-50L|TAB 2 A7-30HC)',
         // http://www.dell.com/support/home/us/en/04/Products/tab_mob/tablets
@@ -260,7 +281,8 @@ class UAParser{
         // http://www.e-boda.ro/tablete-pc.html
         'EbodaTablet'       => 'E-Boda (Supreme|Impresspeed|Izzycomm|Essential)',
         // http://www.allview.ro/produse/droseries/lista-tablete-pc/
-        'AllViewTablet'     => 'Allview.*(Viva|Alldro|City|Speed|All TV|Frenzy|Quasar|Shine|TX1|AX1|AX2)',
+        'AllViewTablet'     => 'Allview.*\b(Viva|Alldro|City|Speed|All TV|Frenzy|Quasar|Shine|TX1|AX1|AX2)\b|'.
+            'Android.*(VivaQ7Satellite|SPEED_QUAD)',
         // http://wiki.archosfans.com/index.php?title=Main_Page
         'ArchosTablet'      => '\b(101G9|80G9|A101IT)\b|Archos5|\bARCHOS (70|79|80|90|97|101|FAMILYPAD|)(b|)(G10| Cobalt| TITANIUM(HD|)| Xenon| Neon|XSK| 2| XS 2| PLATINUM| CARBON|GAMEPAD)\b',
         'Qilive'            => 'Qilive 7|Qilive 97R',
@@ -303,7 +325,7 @@ class UAParser{
         'Gigaset'           => 'Gigaset QV830',
         // Pantech Tablets: http://www.pantechusa.com/phones/
         'PantechTablet'     => 'Pantech.*P4100',
-        'BluePanther'       => 'Panther',
+        'BluePanther'       => 'Panther|voyager GT',
         // Broncho Tablets: http://www.broncho.cn/ (hard to find)
         'BronchoTablet'     => 'Broncho.*(N701|N708|N802|a710)',
         // http://versusuk.com/support.html
@@ -317,12 +339,12 @@ class UAParser{
         'KoboTablet'        => 'Kobo Touch|\bK080\b|\bVox\b Build|\bArc\b Build',
         // French Danew Tablets http://www.danew.com/produits-tablette.php
         'DanewTablet'       => 'DSlide.*\b(700|701R|702|703R|704|802|970|971|972|973|974|1010|1012)\b',
-        'Navon'             => 'Navon Explorer 3G|Raptor_10|HFM7002KD',
+        'Navon'             => 'Navon Explorer 3G|Raptor_(\d)|HFM7002KD|HFM752HCF',
         // Texet Tablets and Readers http://www.texet.ru/tablet/
         'TexetTablet'       => 'NaviPad|TB-772A|TM-7045|TM-7055|TM-9750|TM-7016|TM-7024|TM-7026|TM-7041|TM-7043|TM-7047|TM-8041|TM-9741|TM-9747|TM-9748|TM-9751|TM-7022|TM-7021|TM-7020|TM-7011|TM-7010|TM-7023|TM-7025|TM-7037W|TM-7038W|TM-7027W|TM-9720|TM-9725|TM-9737W|TM-1020|TM-9738W|TM-9740|TM-9743W|TB-807A|TB-771A|TB-727A|TB-725A|TB-719A|TB-823A|TB-805A|TB-723A|TB-715A|TB-707A|TB-705A|TB-709A|TB-711A|TB-890HD|TB-880HD|TB-790HD|TB-780HD|TB-770HD|TB-721HD|TB-710HD|TB-434HD|TB-860HD|TB-840HD|TB-760HD|TB-750HD|TB-740HD|TB-730HD|TB-722HD|TB-720HD|TB-700HD|TB-500HD|TB-470HD|TB-431HD|TB-430HD|TB-506|TB-504|TB-446|TB-436|TB-416|TB-146SE|TB-126SE',
         // Avoid detecting 'PLAYSTATION 3' as mobile.
         'PlaystationTablet' => 'Playstation.*(Portable|Vita)',
-        'MyAudio'           => 'Android.*\b(704T|crane-evb|Power SD)\b',
+        'MyAudio'           => 'Android.*\b(704T|crane-evb|Power SD)\b|My Audio',
         // http://www.trekstor.de/surftabs.html
         'TrekstorTablet'    => 'ST10416-1|VT10416-1|ST70408-1|ST702xx-1|ST702xx-2|ST80208|ST97216|ST70104-2|VT10416-2|ST10216-2A|SurfTab',
         // http://www.pyleaudio.com/Products.aspx?%2fproducts%2fPersonal-Electronics%2fTablets
@@ -361,7 +383,7 @@ class UAParser{
         // http://hclmetablet.com/India/index.php
         'HCLTablet'         => 'HCL.*Tablet|Connect-3G-2.0|Connect-2G-2.0|ME Tablet U1|ME Tablet U2|ME Tablet G1|ME Tablet X1|ME Tablet Y2|ME Tablet Sync',
         // http://www.edigital.hu/Tablet_es_e-book_olvaso/Tablet-c18385.html
-        'DPSTablet'         => 'DPS.?(Dream 9|Dual 7|iQ7)',
+        'DPSTablet'         => 'DPS.?(Dream (\d)|Dual (\d)|iQ7|Titan (\d))',
         // http://www.visture.com/index.asp
         'VistureTablet'     => 'V97 HD|i75 3G|Visture V4( HD)?|Visture V5( HD)?|Visture V10',
         // http://www.mijncresta.nl/tablet
@@ -382,7 +404,7 @@ class UAParser{
         // @note: no need to add all the tablet codes since they are guided by the first regex.
         'StorexTablet'      => 'eZee[_\']?(Tab|Go)[0-9]+|TabLC7|Looney Tunes Tab',
         // Generic Vodafone tablets.
-        'VodafoneTablet'    => 'SmartTab([ ]+)?[0-9]+|SmartTabII10|SmartTabII7',
+        'VodafoneTablet'    => 'SmartTab([ ]+)?[0-9]+|SmartTabII10|SmartTabII7|VF-1497',
         // French tablets - Essentiel B http://www.boulanger.fr/tablette_tactile_e-book/tablette_tactile_essentiel_b/cl_68908.htm?multiChoiceToDelete=brand&mc_brand=essentielb
         // Aka: http://www.essentielb.fr/
         'EssentielBTablet'  => 'Smart[ \']?TAB[ ]+?[0-9]+|Family[ \']?TAB2',
@@ -414,6 +436,7 @@ class UAParser{
         'XoroTablet'        => 'KidsPAD 701|PAD[ ]?712|PAD[ ]?714|PAD[ ]?716|PAD[ ]?717|PAD[ ]?718|PAD[ ]?720|PAD[ ]?721|PAD[ ]?722|PAD[ ]?790|PAD[ ]?792|PAD[ ]?900|PAD[ ]?9715D|PAD[ ]?9716DR|PAD[ ]?9718DR|PAD[ ]?9719QR|PAD[ ]?9720QR|TelePAD1030|Telepad1032|TelePAD730|TelePAD731|TelePAD732|TelePAD735Q|TelePAD830|TelePAD9730|TelePAD795|MegaPAD 1331|MegaPAD 1851|MegaPAD 2151',
         // http://www1.viewsonic.com/products/computing/tablets/
         'ViewsonicTablet'   => 'ViewPad 10pi|ViewPad 10e|ViewPad 10s|ViewPad E72|ViewPad7|ViewPad E100|ViewPad 7e|ViewSonic VB733|VB100a',
+        'Viewpia'           => 'TB311',
         // http://www.odys.de/web/internet-tablet_en.html
         'OdysTablet'        => 'LOOX|XENO10|ODYS[ -](Space|EVO|Xpress|NOON)|\bXELIO\b|Xelio10Pro|XELIO7PHONETAB|XELIO10EXTREME|XELIOPT2|NEO_QUAD10',
         // http://www.captiva-power.de/products.html#tablets-en
@@ -524,7 +547,7 @@ class UAParser{
         'badaOS'            => '\bBada\b',
         'BREWOS'            => 'BREW',
         // desktop OS patterns
-        'Windows'           => 'Windows (95|98|XP|NT (\d)+\.(\d)?)',
+        'Windows'           => 'Windows (95|98|XP|NT (\d)+\.(\d)?)|Win98',
         'Macintosh'         => 'OS X [_0-9]+',
         'Linux'             => '(Ubuntu|X11)',
         'Other Service'     => '',
@@ -564,6 +587,7 @@ class UAParser{
         'NetFront'          => 'NF-Browser',
         'Netscape'          => 'Netscape',
         'Airmail'           => 'Airmail',
+        'LotusNotes'        => 'Lotus[ -]?Notes',
         // @reference: http://developer.apple.com/library/safari/#documentation/AppleApplications/Reference/SafariWebContent/OptimizingforSafarioniPhone/OptimizingforSafarioniPhone.html#//apple_ref/doc/uid/TP40006517-SW3
         'Safari'            => 'Version.*Mobile.*Safari|Safari.*Mobile|MobileSafari|Safari',
         // @reference: http://en.wikipedia.org/wiki/Minimo
@@ -608,6 +632,7 @@ class UAParser{
         'NetFront'          => 'NF-Browser',
         'Netscape'          => 'Netscape\/[0-9]+\.?[0-9]*',
         'Airmail'           => 'Airmail.?[.0-9]+',
+        'LotusNotes'        => 'Lotus-Notes/[0-9\.]+',
         // @reference: http://developer.apple.com/library/safari/#documentation/AppleApplications/Reference/SafariWebContent/OptimizingforSafarioniPhone/OptimizingforSafarioniPhone.html#//apple_ref/doc/uid/TP40006517-SW3
         'Safari'             => 'Safari\/[0-9]+\.?([0-9]+)',
         // @reference: http://en.wikipedia.org/wiki/Minimo
@@ -617,6 +642,13 @@ class UAParser{
         'AppleWebKit'       => 'AppleWebKit\/(\d)+\.?(\d+)?',
         'Other Service'     => '',
     );
+
+    private $desktopOS = [
+        'Windows',
+        'Macintosh',
+        'Linux',
+        'Other Service',
+    ];
 
     /**
      * Original UA string
@@ -684,7 +716,8 @@ class UAParser{
 
         ($device=$this->checkDevice($this->patternMobile, self::deviceMobile)===true ||
             $device=$this->checkDevice($this->patternTablet, self::deviceTablet)===true ||
-                $device=$this->checkDevice($this->patternService, self::deviceService)===true);
+                $device=$this->checkDevice($this->patternSmartTV, self::deviceSmartTV)===true ||
+                    $device=$this->checkDevice($this->patternService, self::deviceService)===true);
         if ($device!==true){
             // set desktop device and version, version in this case is empty string ''
             $this->setDevice(self::deviceDesktop, '', '');
@@ -692,6 +725,11 @@ class UAParser{
         }
 
         $this->checkOS();
+        // recheck the device, if parsed device is 'desktop' and parsed OS is not desktopOS, then device set to 'mobile'
+        if ($this->parsedData['device'] == self::deviceDesktop && !in_array($this->parsedData['os'], $this->desktopOS)){
+            $this->parsedData['device'] = self::deviceMobile;
+        }
+
         $this->checkBrowser();
 
         foreach ($this->parsedData as $k => $v) {
